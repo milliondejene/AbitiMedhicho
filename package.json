@@ -1,0 +1,21 @@
+{
+  "name": "abiti-madhicho",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "./node_modules/nodemon/bin/nodemon.js ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kitila D.",
+  "license": "MIT",
+  "dependencies": {
+    "@fastify/swagger": "^7.4.0",
+    "boom": "^7.3.0",
+    "fastify": "^4.1.0",
+    "fastify-gql": "^0.2.1",
+    "graphql": "^16.5.0",
+    "mongoose": "^6.4.0",
+    "nodemon": "^2.0.16"
+  }
+}
