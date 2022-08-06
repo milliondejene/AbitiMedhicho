@@ -49,6 +49,5 @@ const start = async () => {
     process.exit(1);
   }
 };
-
 //run the server
 start();

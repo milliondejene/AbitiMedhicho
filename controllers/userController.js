@@ -3,7 +3,6 @@ const boom = require("boom");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const passport = require("passport");
 
 //Load User Model & config key
 require("dotenv").config();
@@ -36,7 +35,7 @@ exports.registerUser = async (req, reply) => {
             newUser
               .save() // Save User in Database
               .then((user) => reply.send(user))
-              .catch(err, console.log(err));
+              .catch(err);
           });
         });
         return reply;

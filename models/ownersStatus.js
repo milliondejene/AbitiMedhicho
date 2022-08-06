@@ -12,7 +12,7 @@ const ownersStatusSchema = new mongoose.Schema({
   },
   owner: {
     type: ObjectId,
-    ref: "person",
+    ref: "user",
   },
 });
 

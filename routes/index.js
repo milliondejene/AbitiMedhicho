@@ -1,6 +1,6 @@
 // Import our Controllers
 // const leaderController = require('../controllers/leaderController')
-// const ownerController = require('../controllers/ownerController')
+const ownerController = require('../controllers/ownerController')
 const userController = require("../controllers/userController");
 const constantsAPI = require("../utils/constants");
 
@@ -27,13 +27,33 @@ const routes = [
     handler: userController.loginUser,
   },
 
-  // //Leader Route
-  // {
-  //   method: 'POST',
-  //   url: '/api/leaders',
-  //   // schema: leaderController.addCarSchema,
-  //   handler: leaderController.addLeader
-  // },
+
+  //Owner Route
+  {
+    method: 'POST',
+    url: constantsAPI.API_LEADER,
+    // schema: leaderController.addCarSchema,
+    handler: ownerController.addLeader
+  },
+  {
+    method: 'GET',
+    url: constantsAPI.API_LEADER,
+    // schema: leaderController.addCarSchema,
+    handler: ownerController.getLeaders
+  },
+];
+module.exports = async function (fastify, opts) {
+  // Loop over each route
+  routes.forEach((route, index) => {
+    if (pubicRoutes.includes(route.url)) {
+      fastify.route(route);
+    } else {
+      fastify.route({ ...route, onRequest: [fastify.authenticate] });
+    }
+  });
+};
+
+
 
   // {
   //   method: 'POST',
@@ -92,15 +112,4 @@ const routes = [
   // //   url: '/api/leaderStatus',
   // //   handler: ownerController.getLeaderStatus
   // // },
-];
 
-module.exports = async function (fastify, opts) {
-  // Loop over each route
-  routes.forEach((route, index) => {
-    if (pubicRoutes.includes(route.url)) {
-      fastify.route(route);
-    } else {
-      fastify.route({ ...route, onRequest: [fastify.authenticate] });
-    }
-  });
-};
