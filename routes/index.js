@@ -1,39 +1,106 @@
 // Import our Controllers
-const carController = require('../controllers/leaderController')
+// const leaderController = require('../controllers/leaderController')
+// const ownerController = require('../controllers/ownerController')
+const userController = require("../controllers/userController");
+const constantsAPI = require("../utils/constants");
+
+const pubicRoutes = [constantsAPI.API_USER, constantsAPI.API_LOGIN];
 
 const routes = [
+  //User Route
   {
-    method: 'GET',
-    url: '/',
-    handler: carController.getHomePage
+    method: "POST",
+    url: constantsAPI.API_USER,
+    // schema: leaderController.addCarSchema,
+    handler: userController.registerUser,
   },
   {
-    method: 'GET',
-    url: '/api/cars',
-    handler: carController.getCars
+    method: "GET",
+    url: constantsAPI.API_CURRENT_USER,
+    // schema: leaderController.addCarSchema,
+    handler: userController.currentUser,
   },
   {
-    method: 'GET',
-    url: '/api/cars/:id',
-    handler: carController.getSingleCar
+    method: "POST",
+    url: constantsAPI.API_LOGIN,
+    // schema: leaderController.addCarSchema,
+    handler: userController.loginUser,
   },
-  {
-    method: 'POST',
-    url: '/api/cars',
-    handler: carController.addCar,
-    schema: carController.addCarSchema
-  },
-  {
-    method: 'PUT',
-    url: '/api/cars/:id',
-    handler: carController.updateCar
-  },
-  {
-    method: 'DELETE',
-    url: '/api/cars/:id',
-    handler: carController.deleteCar
-  }
-  
-]
 
-module.exports = routes
+  // //Leader Route
+  // {
+  //   method: 'POST',
+  //   url: '/api/leaders',
+  //   // schema: leaderController.addCarSchema,
+  //   handler: leaderController.addLeader
+  // },
+
+  // {
+  //   method: 'POST',
+  //   url: '/api/leaders/status',
+  //   // schema: leaderController.addCarSchema,
+  //   handler: leaderController.addLeaderStatus
+  // },
+
+  // {
+  //   method: 'GET',
+  //   url: '/api/leaders',
+  //   handler: leaderController.getLeaders
+  // },
+  // {
+  //   method: 'GET',
+  //   url: '/api/leaders/:id',
+  //   handler: leaderController.getSingleLeader
+  // },
+  // {
+  //   method: 'PUT',
+  //   url: '/api/leaders/:id',
+  //   handler: leaderController.updateLeader
+  // },
+  // {
+  //   method: 'DELETE',
+  //   url: '/api/leaders/:id',
+  //   handler: leaderController.deleteLeader
+  // },
+
+  // // Owner Route
+
+  // {
+  //   method: 'POST',
+  //   url: '/api/owner',
+  //   handler: ownerController.addOwner
+  // },
+  // {
+  //   method: 'GET',
+  //   url: '/api/owner',
+  //   handler: ownerController.getOwner
+  // },
+  // {
+  //   method: 'GET',
+  //   url: '/api/owner/:id',
+  //   handler: ownerController.getSingleOwner
+  // },
+  // {
+  //   method: 'GET',
+  //   url: '/api/ownerleader/:id',
+  //   handler: ownerController.getOwnerLeaders
+  // },
+
+  // // // Service Route
+  // // {
+  // //   method: 'GET',
+  // //   url: '/api/leaderStatus',
+  // //   handler: ownerController.getLeaderStatus
+  // // },
+];
+
+module.exports = async function (fastify, opts) {
+  // Loop over each route
+  routes.forEach((route, index) => {
+    if (pubicRoutes.includes(route.url)) {
+      fastify.route(route);
+    } else {
+      fastify.route({ ...route, onRequest: [fastify.authenticate] });
+    }
+  });
+};

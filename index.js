@@ -1,6 +1,8 @@
 //import sever
 
-const fastify = require('./server')
+const fastify = require("./server");
+require("dotenv").config();
+// const passport = require('passport');
 // Import external dependancies
 // const gql = require('fastify-gql')
 // Import GraphQL Schema
@@ -13,30 +15,40 @@ const fastify = require('./server')
 
 //import Routes
 
-const routes = require('./routes')
+const routes = require("./routes");
 
-const swagger = require('./config/swagger')
+const swagger = require("./config/swagger");
 
+// Register jwt plugin
+fastify.register(require("./plugins/jwt"));
+
+fastify.register(routes);
 // Register SwaggerS
 
-fastify.register(require('@fastify/swagger'), swagger.options)
+fastify.register(require("@fastify/swagger"), swagger.options);
+// fastify.addContentTypeParser('application/json', { parseAs: 'string' }, function (req, body, done) {
+//     try {
+//       var json = JSON.parse(body)
+//       done(null, json)
+//     } catch (err) {
+//       err.statusCode = 400
+//       done(err, undefined)
+//     }
+//   })
 
-// Loop over each route
-routes.forEach((route, index) => {
-	fastify.route(route)
-})
+//passport config
+// require('./config/passport')(passport);
 
-const start = async () =>{
-    try{
-        await fastify.listen({ port: 3000 })
-        fastify.swagger()
-        fastify.log.info(`server listening on 3000`)
-    }catch(err){
-        fastify.log.error(err)
-        process.exit(1)
-    }
-}
-  
+const start = async () => {
+  try {
+    await fastify.listen({ port: 3000 });
+    fastify.swagger();
+    fastify.log.info(`server listening on 3000`);
+  } catch (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+};
 
 //run the server
-start()
+start();
