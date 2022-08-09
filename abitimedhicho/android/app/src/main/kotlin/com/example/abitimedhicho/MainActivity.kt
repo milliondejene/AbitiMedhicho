@@ -1,4 +1,4 @@
-package com.example.abiti_medhicho
+package com.example.abitimedhicho
 
 import io.flutter.embedding.android.FlutterActivity
 

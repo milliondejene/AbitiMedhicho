@@ -4,6 +4,7 @@ const boom = require('boom')
 // // Get Data Models
 // const Owner = require('../models/owner')
 const Leader = require('../models/user')
+const ownerStatus = require('../models/ownersStatus')
 
 // @route    Post '/api/leader'
 // @desc     Add a new leader
@@ -32,8 +33,34 @@ exports.getLeaders = async () => {
 
 // Get single leaders by ID
 exports.getSingleLeader = async req => {
+    console.log(req.params.id)
 	try {
-		const id = req.user.id
+		const id = req.params.id
+		const leader = await Leader.findById(id)
+		return leader
+	} catch (err) {
+		throw boom.boomify(err)
+	}
+}
+
+// ADD owner Status
+exports.addOwnerStatus = async req => {
+    console.log(req.params.id)
+    try {
+		// const jsonData =JSON.parse(req.body)
+		const ownerStatus = new ownerStatus(req.body)
+		const newOwnerStatus = await ownerStatus.save()
+		return newOwnerStatus
+	} catch (err) {
+		throw boom.boomify(err)
+	}
+}
+
+// Get owner Status
+exports.getOwnerStatus = async req => {
+    console.log(req.params.id)
+	try {
+		const id = req.params.id
 		const leader = await Leader.findById(id)
 		return leader
 	} catch (err) {

@@ -1,5 +1,5 @@
 // Import our Controllers
-// const leaderController = require('../controllers/leaderController')
+const leaderController = require('../controllers/leaderController')
 const ownerController = require('../controllers/ownerController')
 const userController = require("../controllers/userController");
 const constantsAPI = require("../utils/constants");
@@ -36,11 +36,44 @@ const routes = [
     handler: ownerController.addLeader
   },
   {
+    method: 'POST',
+    url: constantsAPI.API_OWNER_STATUS,
+    // schema: leaderController.addCarSchema,
+    handler: ownerController.addOwnerStatus
+  },
+  {
+    method: 'GET',
+    url: constantsAPI.API_OWNER_STATUS,
+    // schema: leaderController.addCarSchema,
+    handler: ownerController.getOwnerStatus
+  },
+  {
     method: 'GET',
     url: constantsAPI.API_LEADER,
     // schema: leaderController.addCarSchema,
     handler: ownerController.getLeaders
   },
+  {
+    method: 'GET',
+    url: constantsAPI.API_SINGLE_LEADER,
+    // schema: leaderController.addCarSchema,
+    handler: ownerController.getSingleLeader
+  },
+  
+    //leader route
+
+    {
+      method: 'POST',
+      url: constantsAPI.API_LEADER_STATUS,
+      // schema: leaderController.addCarSchema,
+      handler: leaderController.addLeaderStatus
+    },
+    {
+      method: 'GET',
+      url: constantsAPI.API_LEADER_STATUS,
+      // schema: leaderController.addCarSchema,
+      handler: leaderController.getLeaderStatus
+    },
 ];
 module.exports = async function (fastify, opts) {
   // Loop over each route

@@ -6,14 +6,17 @@ const leadersStatusSchema = new mongoose.Schema({
   //------------------------leader checklist---------------------------------------------------------------
   leader: {
     type: ObjectId,
-    ref: "person",
+    ref: "User",
   },
   leaderRecievedShafa: Number,
   soldShafa_Gebi: Number,
   keri: Number,
   leftOverShafa: Number,
   employeSalary: Number,
-  addFactors: Number,
+  addFactors: [{
+    reason: String,
+    amount: Number
+  }],
 
   // totalStatus in a day: Number,
   // terf: Number,

@@ -1,36 +1,32 @@
+const leaderStatus = require('../models/leadersStatus')
+
 // External Dependancies
 const boom = require("boom");
 
-// Get Data Models
-const person = require("../models/user");
-const LeadersStatus = require("../models/leadersStatus");
+// ADD Leader Status
+exports.addLeaderStatus = async req => {
+	try {
+		// const jsonData =JSON.parse(req.body)
+		const leaderStatus = new leaderStatus(req.body)
+		const newLeaderStatus = await leaderStatus.save()
+		return newLeaderStatus
+	} catch (err) {
+		throw boom.boomify(err)
+	}
+}
 
-// @route    Post '/api/leaders'
-// @desc     Add a new Leader
-// @access   Public
+// Get Leader Status
+exports.getLeaderStatus = async req => {
+  console.log(req.params.id)
+try {
+  const id = req.params.id
+  const leader = await Leader.findById(id)
+  return leader
+} catch (err) {
+  throw boom.boomify(err)
+}
+}
 
-exports.addLeader = async (req) => {
-  try {
-    const jsonData = JSON.parse(req.body);
-    const leader = new person(jsonData);
-    const newLeader = await leader.save();
-    return newLeader;
-  } catch (err) {
-    throw boom.boomify(err);
-  }
-};
-
-exports.addLeaderStatus = async (req) => {
-  try {
-    const id = req.param.id;
-    const jsonData = JSON.parse(req.body);
-    const leadersStatus = new LeadersStatus(jsonData);
-    const newleadersStatus = await leadersStatus.save();
-    return newleadersStatus;
-  } catch (err) {
-    throw boom.boomify(err);
-  }
-};
 
 // // @route    GET '/api/leaders'
 // // @desc     Get all Leaders

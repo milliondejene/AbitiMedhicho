@@ -1,6 +1,6 @@
-# abiti_medhicho
+# abitimedhicho
 
-A new Flutter project.
+sales managment app
 
 ## Getting Started
 
